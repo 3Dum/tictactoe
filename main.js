@@ -1,8 +1,11 @@
 // Initialize an array to store game state
 const state = Array(9);
 
-// Var to which turn it is
+// Var for which turn it is
 let turn = 'X'
+
+// Var to track if the game has been won yet or not
+let won = false;
 
 // Func for changing turns
 function changeTurn() {
@@ -14,6 +17,8 @@ function changeTurn() {
 document.getElementById('reset').addEventListener('click', () => {
   state.fill('')
   drawBoard(state)
+  document.getElementById('turn').innerHTML = 'Turn: '
+  won = false;
 });
 
 // Assign board to a variable
@@ -26,11 +31,11 @@ startButton.addEventListener('click', () => drawBoard(state));
 
 // function for when a move is made
 function move(elem) {
-  if (elem.innerHTML) return;
+  if (elem.innerHTML || won) return;
   state[elem.id] = turn;
   elem.innerHTML = turn;
   checkWinner();
-  changeTurn();
+  if (!won) changeTurn();
 }
 
 // Draw initial map from game state array
@@ -60,10 +65,21 @@ function checkWinner() {
     [6, 7, 8]
   ];
 
-  if (combinations.some(c => {
+  let winningCombo = combinations.findIndex(c => {
     return state[c[0]] && state[c[0]] == state[c[1]] && state[c[1]] == state[c[2]];
-  })) {
-    alert('win');
-  } else return;
+  })
+
+  if (winningCombo == -1) {
+    return
+  } else {
+    won = true;
+    // change color of winning combination
+    combinations[winningCombo].forEach(index => {
+      document.getElementById(index).style = 'background-color:#72DDF7'
+    })
+    // announce winner
+    document.getElementById('turn').innerHTML = 'The winner is: '
+  }
 }
 
+``

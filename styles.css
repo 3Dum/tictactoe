@@ -38,7 +38,7 @@ button {
   font-size: 30px;
 }
 
-.turn {
+.turn-container {
   display: flex;
 }
 
