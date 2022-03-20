@@ -21,13 +21,12 @@ document.getElementById('reset').addEventListener('click', () => {
   won = false;
 });
 
-// Assign board to a variable
+// assign board to a variable
 const board = document.getElementById('board');
 
-// Initialize start button
+// initialize start button
 const startButton = document.getElementById('start');
 startButton.addEventListener('click', () => drawBoard(state));
-
 
 // function for when a move is made
 function move(elem) {
@@ -38,10 +37,10 @@ function move(elem) {
   if (!won) changeTurn();
 }
 
-// Draw initial map from game state array
+// draw initial map from game state array
 function drawBoard(arr) {
   board.innerHTML = '';
-  // Recursively draw squares for each item in the array
+  // recursively draw squares for each item in the array
   for (let i = 0; i < arr.length; i++) {
     let elem = document.createElement('div');
     elem.classList.add('square');
@@ -49,11 +48,10 @@ function drawBoard(arr) {
     elem.addEventListener('click', () => move(elem));
     board.appendChild(elem);
   }
-  
-  // Add event listeners to each square
 }
 
 function checkWinner() {
+  // a array of all possible winning combinations
   const combinations = [
     [0, 1, 2],
     [0, 4, 8],
@@ -65,6 +63,7 @@ function checkWinner() {
     [6, 7, 8]
   ];
 
+  // checks each combination against the board's state
   let winningCombo = combinations.findIndex(c => {
     return state[c[0]] && state[c[0]] == state[c[1]] && state[c[1]] == state[c[2]];
   })
@@ -81,5 +80,3 @@ function checkWinner() {
     document.getElementById('turn').innerHTML = 'The winner is: '
   }
 }
-
-``
