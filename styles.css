@@ -11,6 +11,7 @@ body {
   width: 300px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   text-align: center;
   justify-content: center;
   background-color: #8093F1;
@@ -21,6 +22,7 @@ body {
 
 #start {
   grid-column-end: 3;
+  grid-row-end: 3;
 }
 
 button {
@@ -42,4 +44,10 @@ button {
 
 #currentTurn {
   padding-left: 10px;
+}
+
+#reset {
+  background-color: #8093F1;
+  padding: 10px;
+  border-radius: 20px;
 }

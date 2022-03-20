@@ -1,5 +1,5 @@
 // Initialize an array to store game state
-const state = ['', '', '', '', '', '', '', '', '']
+const state = Array(9);
 
 // Var to which turn it is
 let turn = 'X'
@@ -10,7 +10,7 @@ function changeTurn() {
   document.getElementById('currentTurn').innerHTML = turn;
 }
 
-changeTurn();
+document.getElementById('reset').addEventListener('click', () => drawBoard(Array(9)));
 
 // Assign board to a variable
 const board = document.getElementById('board');
@@ -22,7 +22,11 @@ startButton.addEventListener('click', () => drawBoard(state));
 
 // function for when a move is made
 function move(elem) {
-  alert(elem.id);
+  if (elem.innerHTML) return;
+  state[elem.id] = turn;
+  elem.innerHTML = turn;
+  checkWinner();
+  changeTurn();
 }
 
 // Draw initial map from game state array
@@ -33,11 +37,14 @@ function drawBoard(arr) {
     let elem = document.createElement('div');
     elem.classList.add('square');
     elem.setAttribute('id', i)
-    elem.innerHTML = 'X';
     elem.addEventListener('click', () => move(elem));
     board.appendChild(elem);
   }
   
   // Add event listeners to each square
+}
+
+function checkWinner() {
+
 }
 
