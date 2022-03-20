@@ -33,4 +33,13 @@ button {
   justify-content: center;
   align-items: center;
   border-radius: 20px;
+  font-size: 30px;
+}
+
+.turn {
+  display: flex;
+}
+
+#currentTurn {
+  padding-left: 10px;
 }
