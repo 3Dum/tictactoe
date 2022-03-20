@@ -1,0 +1,17 @@
+body {
+  background-color: #FDC5F5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Bungee, Georgia, Times, 'Times New Roman', serif;
+}
+
+#board {
+  height: 50vh;
+  width: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #8093F1;
+  border-radius: 20px;
+}
