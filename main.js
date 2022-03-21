@@ -1,40 +1,35 @@
-// Initialize an array to store game state
 const state = Array(9);
-
-// Var for which turn it is
 let turn = 'X'
+let gameOver = false;
+let turnCounter = 0;
 
-// Var to track if the game has been won yet or not
-let won = false;
-
-// Func for changing turns
 function changeTurn() {
   turn = turn == 'X' ? 'O' : 'X';
-  document.getElementById('currentTurn').innerHTML = turn;
+  document.getElementById('currentTurn').textContent = turn;
 }
 
-// Handles resetting the game
-document.getElementById('reset').addEventListener('click', () => {
-  state.fill('')
-  drawBoard(state)
-  document.getElementById('turn').innerHTML = 'Turn: '
-  won = false;
-});
-
-// assign board to a variable
-const board = document.getElementById('board');
-
-// initialize start button
 const startButton = document.getElementById('start');
 startButton.addEventListener('click', () => drawBoard(state));
 
+const board = document.getElementById('board');
+
+document.getElementById('reset').addEventListener('click', () => {
+  state.fill('')
+  drawBoard(state)
+  document.getElementById('turn').textContent = 'Turn: '
+  document.getElementById('currentTurn').textContent = turn;
+  gameOver = false;
+  turnCounter = 0;
+});
+
 // function for when a move is made
 function move(elem) {
-  if (elem.innerHTML || won) return;
+  if (gameOver) return;
   state[elem.id] = turn;
   elem.innerHTML = turn;
+  turnCounter++;
   checkWinner();
-  if (!won) changeTurn();
+  if (!gameOver) changeTurn();
 }
 
 // draw initial map from game state array
@@ -45,7 +40,7 @@ function drawBoard(arr) {
     let elem = document.createElement('div');
     elem.classList.add('square');
     elem.setAttribute('id', i)
-    elem.addEventListener('click', () => move(elem));
+    elem.addEventListener('click', () => move(elem), {once: true});
     board.appendChild(elem);
   }
 }
@@ -69,14 +64,21 @@ function checkWinner() {
   })
 
   if (winningCombo == -1) {
+    if (turnCounter > 8) {
+      gameOver = true;
+      let allSquare = document.querySelectorAll('.square');
+      allSquare.forEach(node => node.style.backgroundColor = '#FFEE93');
+      document.getElementById('turn').textContent = 'Stale Mate!'
+      document.getElementById('currentTurn').textContent = '';
+    }
     return
   } else {
-    won = true;
+    gameOver = true;
     // change color of winning combination
     combinations[winningCombo].forEach(index => {
-      document.getElementById(index).style = 'background-color:#72DDF7'
+      document.getElementById(index).style.backgroundColor = '#72DDF7';
     })
     // announce winner
-    document.getElementById('turn').innerHTML = 'The winner is: '
+    document.getElementById('turn').textContent = 'The winner is: '
   }
 }
